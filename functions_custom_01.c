@@ -118,7 +118,7 @@ void shell_exit(st_parameters *pmt)
 		else
 		{
 			write(STDERR_FILENO, "Exit: Illegal number\n", 21);
-			break;
+			return;
 		}
 	}
 

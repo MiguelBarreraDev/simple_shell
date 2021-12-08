@@ -18,14 +18,14 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 
 	init_struct(&pmt, argv, env);
 	signal(SIGINT, shell_signal);
+	pmt.input_type = isatty(STDIN_FILENO);
 	while (1)
 	{
 		sz_buffer = 0, r_getline = 0;
 		/* info - Check the file descriptor reference */
-		if (isatty(STDIN_FILENO))
+		if (pmt.input_type == 1)
 		{
 			write(STDOUT_FILENO, prompt, strlen(prompt));
-			pmt.input_type = 1;
 		}
 		pmt.lines += 1;
 		r_getline = getline(&(pmt.command), &sz_buffer, stdin);
