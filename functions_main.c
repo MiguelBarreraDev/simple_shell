@@ -1,4 +1,5 @@
 #include  "shell.h"
+#define MAX 1024
 /**
  * validate_commands - validates the existence and execution
  * permissions of the command entered by the user
@@ -6,21 +7,37 @@
  */
 void validate_commands(st_parameters *pmt)
 {
-	int r_access, band = 0;
-	char *tmp_free = NULL, *buffer = NULL;
+	char **tokens = pmt->tokens;
+	ssize_t validador;
+	char buffer1[MAX];
+	const char *str1 = "/bin/", *str2 = NULL;
+	int band = 0;
+	char *tmp_free = NULL;
 
 	tmp_free = pmt->tokens[0];
-	r_access = my_access(&band, &buffer, pmt);
 
-	if (r_access == -1)
-		command_customs(pmt);
-	else
-		command_systems(pmt);
-	/* @band: variable to recognize the format of the first token */
-	if (band == 1)
+	if (tokens[0] && tokens[0][0] != '/')
 	{
-		pmt->tokens[0] = tmp_free;
-		free(buffer);
+		str2 = tokens[0];
+		band = 1;
+		memccpy((char *)memccpy(buffer1, str1, '\0', MAX) - 1, str2, '\0', MAX);
+		tokens[0] = buffer1;
+	}
+
+	validador = access(tokens[0], X_OK);
+	if (validador == -1)
+	{
+		/* @band: variable to recognize the format of the first token */
+		if (band == 1)
+			pmt->tokens[0] = tmp_free;
+		command_customs(pmt);
+	}
+	else
+	{
+		command_systems(pmt);
+		/* @band: variable to recognize the format of the first token */
+		if (band == 1)
+			pmt->tokens[0] = tmp_free;
 	}
 }
 /**
@@ -73,14 +90,14 @@ void (*matcher(char *entry_cmd))(st_parameters *)
 	int i = 0;
 
 	cmd_t cmd[] = {
-		{"clear", shell_clear},
-		{"env", shell_env},
-		{"printenv", shell_env},
+		{"/bin/clear", shell_clear},
+		{"/bin/env", shell_env},
+		{"/bin/printenv", shell_env},
 		{"exit", shell_exit},
-		{"setenv", shell_setenv},
-		{"unsetenv", shell_unsetenv},
-		{"cd", shell_cd},
-		{"printenv", shell_printenv},
+		{"/bin/setenv", shell_setenv},
+		{"/bin/unsetenv", shell_unsetenv},
+		{"/bin/cd", shell_cd},
+		{"/bin/printenv", shell_printenv},
 		{NULL, NULL}
 	};
 	while (cmd[i].name != NULL)
