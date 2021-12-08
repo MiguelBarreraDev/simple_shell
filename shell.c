@@ -20,6 +20,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	signal(SIGINT, shell_signal);
 	while (1)
 	{
+		sz_buffer = 0, r_getline = 0;
 		/* info - Check the file descriptor reference */
 		if (isatty(STDIN_FILENO))
 		{
@@ -35,13 +36,13 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 		_trim(&(pmt.command));
 		/* info - Controlling line break "\n" */
 		if (strlen(pmt.command) <= 1)
+		{
+			free(pmt.command);
 			continue;
-
+		}
 		for (i = 0; (pmt.tokens[i] = my_strtok(pmt.command, " \n")) != NULL; i++)
 			pmt.command = NULL;
-
 		validate_commands(&pmt);
-		/* info - how weird? */
 		free(pmt.tokens[0]), free(pmt.command);
 	}
 	free(pmt.tokens), free(pmt.command);

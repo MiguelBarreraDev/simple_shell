@@ -109,7 +109,6 @@ void _trim(char **str)
 			i++;
 		while (*(*str + i + len) != '\0')
 			len++;
-
 		fstr = malloc(sizeof(char) * len + 1);
 		while (*(*str + i) != '\0')
 		{

@@ -81,14 +81,14 @@ void command_customs(st_parameters *pmt)
 	f = matcher(pmt->tokens[0]);
 	if (f == NULL)
 	{
-		lines = to_str(pmt->lines);
-		_concat(&str_err, 6, shell, s, lines, s, input, err);
 		if (pmt->input_type == 1)
 		{
 			perror(shell);
 		}
 		else
 		{
+			lines = to_str(pmt->lines);
+			_concat(&str_err, 6, shell, s, lines, s, input, err);
 			free(str_err);
 			free(lines);
 		}
@@ -96,6 +96,7 @@ void command_customs(st_parameters *pmt)
 	else
 		f(pmt);
 }
+
 /**
  * matcher - Check the agreement between the command
  * entered and the list of program commands
