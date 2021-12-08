@@ -14,7 +14,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	st_parameters pmt;
 	size_t sz_buffer;
 	char *prompt = ":) ";
-	int r_getline = 0, i = 0;
+	int r_getline = 0, i;
 
 	pmt.command = NULL;
 	pmt.name_shell = argv[0];
@@ -24,14 +24,16 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	pmt.tokens = malloc(sizeof(char *) * 50);
 	/*signal(SIGINT, shell_signal);*/
 	while (r_getline != -1)
-	{
+	{;
 		/* info - Check the file descriptor reference */
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, strlen(prompt));
 		r_getline = getline(&(pmt.command), &sz_buffer, stdin);
 		/* info - Exit my shell options "crtl + D" */
+		if (r_getline == EOF)
+			break;
 		/* info - Remove blanks at start */
-		/*_trim(&(pmt.command));*/
+		_trim(&(pmt.command));
 		/* info - Controlling line break "\n" */
 		if (r_getline <= 1)
 			continue;
