@@ -109,10 +109,11 @@ void shell_exit(st_parameters *pmt)
 	str_status = pmt->tokens[1];
 	status = (!str_status) ? 0 : atoi(str_status);
 
+	(void)status;
 	free(pmt->command);
 	free(pmt->tokens[0]);
 	free(pmt->tokens);
 	if (pmt->band == 1)
 		_free(pmt->environment);
-	exit(status);
+	exit(0);
 }
