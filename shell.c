@@ -20,6 +20,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	pmt.name_shell = argv[0];
 	pmt.environment = env;
 	pmt.band = 0;
+	pmt.lines = 0;
 	/* info - IMPORT! reserved memory */
 	pmt.tokens = malloc(sizeof(char *) * 50);
 	signal(SIGINT, shell_signal);
@@ -28,6 +29,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 		/* info - Check the file descriptor reference */
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, strlen(prompt));
+		pmt.lines += 1;
 		r_getline = getline(&(pmt.command), &sz_buffer, stdin);
 		/* info - Exit my shell options "crtl + D" */
 		if (r_getline == EOF)
