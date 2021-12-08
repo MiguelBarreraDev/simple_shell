@@ -54,6 +54,7 @@ void command_systems(st_parameters *pmt)
 	switch (id_proccess)
 	{
 		case -1:
+			write(STDERR_FILENO, "ERROR: Failed create child\n", 27);
 			break;
 		case 0:
 			execve(pmt->tokens[0], pmt->tokens, pmt->environment);
