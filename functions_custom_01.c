@@ -107,7 +107,7 @@ void shell_exit(st_parameters *pmt)
 	int status = 0;
 
 	str_status = pmt->tokens[1];
-	status = (!str_status) ? 0 : _atoi(str_status);
+	status = (!str_status) ? 0 : atoi(str_status);
 
 	free(pmt->command);
 	free(pmt->tokens[0]);
