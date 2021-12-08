@@ -70,14 +70,22 @@ void command_systems(st_parameters *pmt)
 void command_customs(st_parameters *pmt)
 {
 	void (*f)(st_parameters *);
-	char *name = pmt->name_shell;
+	char *shell = pmt->name_shell;
+	char *input = pmt->tokens[0];
+	char *str_err = NULL;
+	char *lines;
+	char *s = ": ";
+	char *err = ": not found\n";
 
+	lines = to_str(pmt->lines);
+	_concat(&str_err, 6, shell, s, lines, s, input, err);
 	/* info - select function custom */
 	f = matcher(pmt->tokens[0]);
 	if (f == NULL)
 	{
-		/*write(STDERR_FILENO, name, strlen(name));*/
-		perror(name);
+		write(STDERR_FILENO, str_err, strlen(str_err));
+		free(str_err);
+		free(lines);
 	}
 	else
 		f(pmt);
