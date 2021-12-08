@@ -104,7 +104,7 @@ void shell_clear(__attribute__((unused))st_parameters *pmt)
 void shell_exit(st_parameters *pmt)
 {
 	char *str_status = NULL;
-	int status = 0;
+	int status;
 
 	str_status = pmt->tokens[1];
 	status = (!str_status) ? 0 : atoi(str_status);
@@ -114,6 +114,5 @@ void shell_exit(st_parameters *pmt)
 	free(pmt->tokens);
 	if (pmt->band == 1)
 		_free(pmt->environment);
-
 	exit(status);
 }

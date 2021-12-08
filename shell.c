@@ -22,7 +22,6 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	pmt.band = 0;
 	/* info - IMPORT! reserved memory */
 	pmt.tokens = malloc(sizeof(char *) * 50);
-
 	signal(SIGINT, shell_signal);
 	while (1)
 	{
@@ -41,13 +40,12 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 
 		for (i = 0; (pmt.tokens[i] = my_strtok(pmt.command, " \n")) != NULL; i++)
 			pmt.command = NULL;
+
 		validate_commands(&pmt);
 		/* info - how weird? */
-		free(pmt.tokens[0]);
-		free(pmt.command);
+		free(pmt.tokens[0]), free(pmt.command);
 	}
-	free(pmt.tokens);
-	free(pmt.command);
+	free(pmt.tokens), free(pmt.command);
 	if (pmt.band == 1)
 		_free(pmt.environment);
 	return (0);
