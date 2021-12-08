@@ -24,7 +24,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	pmt.tokens = malloc(sizeof(char *) * 50);
 	/*signal(SIGINT, shell_signal);*/
 	while (r_getline != -1)
-	{;
+	{
 		/* info - Check the file descriptor reference */
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, strlen(prompt));
