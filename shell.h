@@ -29,6 +29,7 @@
  * @tokens: command split
  * @band: verify changes in the environment variables
  * @lines: counter lines
+ * @input_type: 0 mood no interactive, 1 mood interactive
  *
  * Description: longer description
  */
@@ -40,6 +41,7 @@ typedef struct Parameters
 	char **tokens;
 	int  band;
 	int lines;
+	int input_type;
 } st_parameters;
 /**
  * struct cmd_clean - struct content name a function custom of my shell
@@ -91,6 +93,7 @@ char **_drealloc(char **src, size_t size, size_t add, char **list, int mood);
 unsigned int _dstrlen(char **ptr);
 void _concat(char **buff, int n, ...);
 char *to_str(int n);
+void init_struct(st_parameters *pmt, char **argv, char **env);
 /*===== end =====*/
 
 #endif
