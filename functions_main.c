@@ -70,11 +70,15 @@ void command_systems(st_parameters *pmt)
 void command_customs(st_parameters *pmt)
 {
 	void (*f)(st_parameters *);
+	char *name = pmt->name_shell;
 
 	/* info - select function custom */
 	f = matcher(pmt->tokens[0]);
 	if (f == NULL)
-		write(STDERR_FILENO, "ERROR: command not found\n", 25);
+	{
+		/*write(STDERR_FILENO, name, strlen(name));*/
+		perror(name);
+	}
 	else
 		f(pmt);
 }
