@@ -1,3 +1,11 @@
+.[a-z]*
+.[0-9]*
+*~*
+test.c
+test
+_putchar.c
+a.out
+deltmp
 # Prerequisites
 *.d
 
