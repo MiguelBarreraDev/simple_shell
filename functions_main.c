@@ -77,15 +77,20 @@ void command_customs(st_parameters *pmt)
 	char *s = ": ";
 	char *err = ": not found\n";
 
-	lines = to_str(pmt->lines);
-	_concat(&str_err, 6, shell, s, lines, s, input, err);
 	/* info - select function custom */
 	f = matcher(pmt->tokens[0]);
 	if (f == NULL)
 	{
-		write(STDERR_FILENO, str_err, strlen(str_err));
-		free(str_err);
-		free(lines);
+		lines = to_str(pmt->lines);
+		_concat(&str_err, 6, shell, s, lines, s, input, err);
+		if (pmt->input_type == 1)
+			perror(shell);
+		else
+		{
+			write(STDERR_FILENO, str_err, strlen(str_err));
+			free(str_err);
+			free(lines);
+		}
 	}
 	else
 		f(pmt);
