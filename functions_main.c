@@ -30,9 +30,11 @@ void validate_commands(st_parameters *pmt)
 		/* @band: variable to recognize the format of the first token */
 		if (band == 1)
 			pmt->tokens[0] = tmp_free;
-		command_customs(pmt);
+		validador = access(tokens[0], X_OK);
+		if (validador == -1)
+			command_customs(pmt);
 	}
-	else
+	if (validador != -1)
 	{
 		command_systems(pmt);
 		/* @band: variable to recognize the format of the first token */
