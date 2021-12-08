@@ -104,16 +104,28 @@ void shell_clear(__attribute__((unused))st_parameters *pmt)
 void shell_exit(st_parameters *pmt)
 {
 	char *str_status = NULL;
-	int status;
+	int status = 0;
+	int num = 0, i = 0, bs = 10;
 
 	str_status = pmt->tokens[1];
 	status = (!str_status) ? 0 : atoi(str_status);
+	for (i = 0; str_status != NULL && str_status[i]; i++)
+	{
+		if (i <= bs && str_status[i] >= '0' && str_status[i] <= '9')
+		{
+			num = (num * 10) + (str_status[i] - '0');
+		}
+		else
+		{
+			write(STDERR_FILENO, "Exit: Illegal number\n", 21);
+			break;
+		}
+	}
 
-	(void)status;
 	free(pmt->command);
 	free(pmt->tokens[0]);
 	free(pmt->tokens);
 	if (pmt->band == 1)
 		_free(pmt->environment);
-	exit(0);
+	exit(status);
 }
