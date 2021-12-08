@@ -90,14 +90,14 @@ void (*matcher(char *entry_cmd))(st_parameters *)
 	int i = 0;
 
 	cmd_t cmd[] = {
-		{"/bin/clear", shell_clear},
-		{"/bin/env", shell_env},
-		{"/bin/printenv", shell_env},
+		{"clear", shell_clear},
+		{"env", shell_env},
+		{"printenv", shell_env},
 		{"exit", shell_exit},
-		{"/bin/setenv", shell_setenv},
-		{"/bin/unsetenv", shell_unsetenv},
-		{"/bin/cd", shell_cd},
-		{"/bin/printenv", shell_printenv},
+		{"setenv", shell_setenv},
+		{"unsetenv", shell_unsetenv},
+		{"cd", shell_cd},
+		{"printenv", shell_printenv},
 		{NULL, NULL}
 	};
 	while (cmd[i].name != NULL)
