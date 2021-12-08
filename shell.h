@@ -28,6 +28,7 @@
  * @command: command insert by user
  * @tokens: command split
  * @band: verify changes in the environment variables
+ * @lines: counter lines
  *
  * Description: longer description
  */
@@ -38,6 +39,7 @@ typedef struct Parameters
 	char *command;
 	char **tokens;
 	int  band;
+	int lines;
 } st_parameters;
 /**
  * struct cmd_clean - struct content name a function custom of my shell
@@ -88,6 +90,7 @@ void _free(char **ptr);
 char **_drealloc(char **src, size_t size, size_t add, char **list, int mood);
 unsigned int _dstrlen(char **ptr);
 void _concat(char **buff, int n, ...);
+char *to_str(int n);
 /*===== end =====*/
 
 #endif
