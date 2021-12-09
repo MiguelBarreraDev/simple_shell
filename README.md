@@ -43,33 +43,51 @@ that executes commands read from standard input.
 |--|--|
 | **AUTHORS** | Contains the authors of the Simple Shell program. |
 | **README.md** | Contains an overview of Simple Shell. Important things that you should know before executes our Simple Shell program. |
-| **built-in.c** | **built_in:** Checks cmd structure and prints their system calls. **my_getline:** Reads and store the input console. **_strtok:** Divides the buffer in tokens when it finds spaces. **flag_0:** Checks if there are errors on the first buffer. **flag_1:** Checks if there is more than 1 buffer. |
-| **function_match_1.c** |  **print_env:** Prints the enviroment. **shell_printenv:** Prints a single line of the enviroment. **shell_setenv:** Creates a value at the enviroment. **shell_unsetenv:** Deletes a value at the enviroment. |
-| **function_match_2.c** | **shell_clear:** Clears the console. **change_directory:** Changes the directory. **change_path:** Changes the PATH. |
-| **functions_help_1** | **_concat:** Concatenates the buffer with 'n' arguments. |
-| **functions_help_2** | **my_getenv:** Searches a key string into the enviroment. **_dstrlen:** Calculates the size of the string of a double pointer. **_free:** Frees the double pointer. **_drealloc:** Reallocates memory depending on flags. |
-| **header.h** | Contains the structures used in our code. Also contains all libraries needed. |
-| **main.c** | **main:** Creates a simple shell. **exit_time:** Compares buffer with 'exit' ignoring spaces. **bypass:** Controls the routes of the structure of cmd. **signal_betty:** Prints \nCisfun$ after signal with betty style. |
-| **match.c** | **match:** Matches the input with the stored string. **function_fork:** Divides the process before executes the system call execve(). |
+| **functions_IO.c** | **built_in:** Checks cmd structure and prints their system calls. **my_getline:** Reads and store the input console. **_strtok:** Divides the buffer in tokens when it finds spaces. **flag_0:** Checks if there are errors on the first buffer. **flag_1:** Checks if there is more than 1 buffer. |
+| **functions_main.c** |  **print_env:** Prints the enviroment. **shell_printenv:** Prints a single line of the enviroment. **shell_setenv:** Creates a value at the enviroment. **shell_unsetenv:** Deletes a value at the enviroment. |
+| **function_libraries.c** | **shell_clear:** Clears the console. **change_directory:** Changes the directory. **change_path:** Changes the PATH. |
+| **functions_help_01.c** | **_concat:** Concatenates the buffer with 'n' arguments. |
+| **functions_help_02.c** | **my_getenv:** Searches a key string into the enviroment. **_dstrlen:** Calculates the size of the string of a double pointer. **_free:** Frees the double pointer. **_drealloc:** Reallocates memory depending on flags. |
+| **functions_custom_01.c** | **_concat:** Concatenates the buffer with 'n' arguments. |
+| **functions_custom_02.c** | **_concat:** Concatenates the buffer with 'n' arguments. |
+| **shell.h** | Contains the structures used in our code. Also contains all libraries needed. |
+| **shell.c** | **main:** Creates a simple shell. **exit_time:** Compares buffer with 'exit' ignoring spaces. **bypass:** Controls the routes of the structure of cmd. **signal_betty:** Prints \nCisfun$ after signal with betty style. |
 
 # Compilation
 
 Usage: **Shell**
 Simple shell is started with the standard input connected to the terminal. To start, compile all .c located in this repository by using this command:
-```
+```js
 gcc -Wall -Werror -Wextra -pedantic *.c -o Shell
 ```
 # Example
 
-Usage: **hsh**
-```c
-jairocast2@ubuntu:~/shell$ ./Shell
-#Cisfun$
-#Cisfun$ ls
-AUTHORS      function_match_1.c   functions_help_1.c   header.h   match.c        README.md
- built-in.c   function_match_2.c   functions_help_2.c   main.c
-#Cisfun$ exit
-jairocast2@ubuntu:~/shell$
+Usage: Interactive mode
+```js
+user@ubuntu:~/simple_shell$ ./Shell
+#Cisfun$~ cp /bin/ls my_ls
+#Cisfun$~ ./my_ls
+check-betty       hsh    parts_project  simple_shell_tester  tests_2  val
+haru_checker_v03  my_ls  run            tests                text
+#Cisfun$~ exit
+user@ubuntu:~/simple_shell$
+```
+Usage: Non-interactive mode
+```js
+user@ubuntu:~/simple_shell$ echo "ls -la" | ./Shell
+total 304
+-rwxr--r-- 1 root root     29 Dec  8 18:55 check-betty
+-rwxr-xr-x 1 root root   2862 Dec  8 23:24 haru_checker_v03
+-rwxr-xr-x 1 root root 128568 Dec  9 01:32 hsh
+-rwxr-xr-x 1 root root 142144 Dec  8 18:55 my_ls
+-rwxr--r-- 1 root root    204 Dec  8 18:55 parts_project
+-rwxr-xr-x 1 root root     83 Dec  8 18:55 run
+drwxr-xr-x 6 root root   4096 Dec  8 18:55 simple_shell_tester
+drwxr-xr-x 2 root root   4096 Dec  9 01:34 tests
+drwxr-xr-x 2 root root   4096 Dec  9 01:33 tests_2
+-rwxr--r-- 1 root root    374 Dec  8 18:55 text
+-rwxr--r-- 1 root root     66 Dec  8 18:55 val
+user@ubuntu:~/simple_shell$
 ```
 
 # Command List
@@ -110,3 +128,6 @@ Cristhian Apaza -
         <img src="https://img.shields.io/badge/Cristhian-mainPage-blue">
 </a>
 </p>
+<div align="center">
+    <img src="https://stormotion.io/blog/content/images/2018/12/developer.gif" width="400" height="200">
+</div>
