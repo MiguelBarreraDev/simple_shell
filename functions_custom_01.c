@@ -117,11 +117,13 @@ void shell_exit(st_parameters *pmt)
 		}
 		else
 		{
+			pmt->count_exit += 1;
 			write(STDERR_FILENO, "Exit: Illegal number\n", 21);
 			return;
 		}
 	}
-
+	if (pmt->count_exit > 0 && status == 0)
+		status = 2;
 	free(pmt->command);
 	free(pmt->tokens[0]);
 	free(pmt->tokens);

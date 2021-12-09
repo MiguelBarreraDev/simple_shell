@@ -30,6 +30,7 @@
  * @band: verify changes in the environment variables
  * @lines: counter lines
  * @input_type: 0 mood no interactive, 1 mood interactive
+ * @count_exit: count exit entry
  *
  * Description: longer description
  */
@@ -42,6 +43,7 @@ typedef struct Parameters
 	int  band;
 	int lines;
 	int input_type;
+	int count_exit;
 } st_parameters;
 /**
  * struct cmd_clean - struct content name a function custom of my shell

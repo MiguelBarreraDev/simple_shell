@@ -19,6 +19,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	init_struct(&pmt, argv, env);
 	signal(SIGINT, shell_signal);
 	pmt.input_type = isatty(STDIN_FILENO);
+	pmt.count_exit = 0;
 	while (1)
 	{
 		sz_buffer = 0, r_getline = 0;
