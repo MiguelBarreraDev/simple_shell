@@ -40,7 +40,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 			free(pmt.command);
 			continue;
 		}
-		for (i = 0; (pmt.tokens[i] = my_strtok(pmt.command, " \n")) != NULL; i++)
+		for (i = 0; (pmt.tokens[i] = my_strtok(pmt.command, " \t\n")) != NULL; i++)
 			pmt.command = NULL;
 		validate_commands(&pmt);
 		free(pmt.tokens[0]), free(pmt.command);

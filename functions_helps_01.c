@@ -103,9 +103,9 @@ void _trim(char **str)
 	char *tmp = *str;
 	char *fstr = NULL;
 
-	if (**str == ' ')
+	if (**str == ' ' || **str == '\t')
 	{
-		while (*(*str + i) == ' ' && *(*str + i) != '\0')
+		while ((*(*str + i) == ' ' || *(*str + i) == '\t') && *(*str + i) != '\0')
 			i++;
 		while (*(*str + i + len) != '\0')
 			len++;
