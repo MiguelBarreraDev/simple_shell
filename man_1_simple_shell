@@ -1,1 +1,86 @@
-# Simple shell
+.TH SIMPLE SHELL 1 "December 2021" "MAN SIMPLE SHELL" "SIMPLE SHELL - Simple Shell man page"
+
+.SH NAME
+#Cisfun$\fR \- simple UNIX command interpreter
+
+.SH SYNOPSIS
+#Cisfun$\fR [\fIcommand user\fR]
+
+.SH DESCRIPTION
+#Cisfun$\fR is a simple emulator shell command language interpreter that executes commands read from the standard input or from a file.
+
+.SH ARGUMENTS
+If arguments remain after option processing, the first argument is assumed to be the name of a file containing shell commands. #Cisfun reads and executes commands from this file, then exits. #Cisfun exit status is the exit status of the last command executed in the script. If the commands are executed, the exit status is 0. An attempt is first made to open the file in the current directory, and, if no file is found, then the shell searches the directories in PATH for the script.
+
+.SH INVOCATION
+#Cisfun is started with the standard input connected to the terminal (as determined by \fIisatty(3)\fR), the interactive mode is executed. Also non-interactively option can be executed.
+When #Cisfun is executed interactively, the prompt is displayed  \fI#Cisfun \fR to read any command, the command line argument is invoked and is treated as the first argument.
+
+.SH DEFINITIONS
+The following definitions are used throughout the rest of this document.
+
+- \fIblank\fR
+
+A space or tab.
+
+- \fIword\fR
+
+A sequence of characters considered as a single unit by the shell. Also known as a token\fR.
+
+.SH Command Execution
+After a command has been split into words, if it results in a simple command and an optional list of arguments, the following actions are token.
+
+If the command name contains no slashes, the shell attempts to locate it. If there exists a shell function by that name, that function is invoked. If the name does not match a function, the shell searches for it in the list of shell builtins. If a match is found, that builtin is invoked.
+
+If the name is neither a shell function nor a builtin, and contains no slashes, \fI#Cisfun\fR searches each element of the \fIPATH\fR for a directory containing an executable file by that name. A full search of the directories in \fIPATH\fR is performed only if the command is not found in the hash table. If the search is unsuccessful, the shell searches for a defined shell function named "command not found". If that function exists, it is invoked with the original command and the original command's arguments as its arguments, and the function's exit status becomes the exit status of the shell.
+
+.SH Environment
+\fB#Cisfun\fR takes a copy from \fBBash\fR environment of the parent process where it was executed. The environment is an array of strings containing the variables in the format.
+When a program is invoked it is given an array of strings called the environment. This is a list of name-value pairs, of the form name=value.
+
+The shell provides several ways to manipulate the environment. On invocation, the shell scans its own environment and creates a parameter for each name found, automatically marking it for export to child processes. Executed commands inherit the environment.
+
+.SH Exit Status
+#Cisfun\fR exit status of an executed command is the value returned by the waitpid system call or equivalent function. A command which exits with a zero exit status has succeeded. An exit status of zero indicates success. A non-zero exit status indicates failure.
+
+All builtins return zero on success and one or two on incorrect usage (indicated by a corresponding error message).
+
+.SH BUILTINS
+The following builtin commands are supported:
+
+.B env
+
+- Print the current enviroment
+
+.B setenv [Variable] [Value]
+
+- Creates a new environment variab;e or modifies an existing one.
+
+.B unsetenv [Variable]
+
+- Removes an environmental variable.
+
+.B exit [Status]
+
+- Exit the shell
+
+.B cd [Directory]
+
+- Changes the current directory of the process to DIRECTORY.  If no argument is given, the command is interpreted as cd $HOME. If the argument - is given, the command is interpreted as cd $OLDPWD. The environment variables PWD and OLDPWD are updated after a change of directory.
+
+.SH EXAMPLE
+.B [...]
+
+- Cisfun>$ ls -l
+
+.B [...]
+
+.SH SEE ALSO
+signal(), isatty(), access(), chdir(), execve(), exit(3), fflush(), fork(), free(), getcwd(), malloc(), stat(), wait(), write(), kill(), getline()
+#Cisfun\fR takes basic functionality of the \fBsh\fR shell. This man page is based on the man page bash(1)
+
+.SH AUTHORS
+Miguel Barrera and Cristhian Apaza
+
+.SH COPYRIGHT
+soda is Copyright (C) 2021 by Miguel Barrera and Cristhian Apaza
