@@ -116,10 +116,10 @@ void (*matcher(char *entry_cmd))(st_parameters *)
 		{"env", shell_env},
 		{"printenv", shell_env},
 		{"exit", shell_exit},
+		{"\"exit\"", shell_exit},
 		{"setenv", shell_setenv},
 		{"unsetenv", shell_unsetenv},
 		{"cd", shell_cd},
-		{"printenv", shell_printenv},
 		{NULL, NULL}
 	};
 	while (cmd[i].name != NULL)
