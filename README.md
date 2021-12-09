@@ -22,22 +22,22 @@
 <h4 align="center"> _printf() - lightweight version of printf, supporting basic and most used functionality </h4>
 
 <p align="center">
-    <a href="## Overview">Overview</a> •
-    <a href="## Description">Description</a> •
+    <a href="#Overview">Overview</a> •
+    <a href="#Description">Description</a> •
     <a href="#Format">Format</a> •
 </p>
 
-## Overview
+# Overview
 Simple_shell repository contains files of our version of Shell
 which is a simple UNIX shell based on bash and Sh. Our command
 line version of the interpreter is written in C language.
 
-## Description
+# Description
 Simple Shell is a program that emulates a shell (bash) in an
 interactive mode. This is a command language interpreter
 that executes commands read from standard input.
 
-## Files Contained on this repository
+# Files Contained on this repository
 
 | File | Description |
 |--|--|
@@ -52,14 +52,14 @@ that executes commands read from standard input.
 | **main.c** | **main:** Creates a simple shell. **exit_time:** Compares buffer with 'exit' ignoring spaces. **bypass:** Controls the routes of the structure of cmd. **signal_betty:** Prints \nCisfun$ after signal with betty style. |
 | **match.c** | **match:** Matches the input with the stored string. **function_fork:** Divides the process before executes the system call execve(). |
 
-## Compilation
+# Compilation
 
 Usage: **Shell**
 Simple shell is started with the standard input connected to the terminal. To start, compile all .c located in this repository by using this command:
 ```
 gcc -Wall -Werror -Wextra -pedantic *.c -o Shell
 ```
-## Example
+# Example
 
 Usage: **hsh**
 ```c
@@ -72,7 +72,7 @@ AUTHORS      function_match_1.c   functions_help_1.c   header.h   match.c       
 jairocast2@ubuntu:~/shell$
 ```
 
-## Command List
+# Command List
 
 | Commands | Description |
 |--|--|
@@ -87,12 +87,12 @@ jairocast2@ubuntu:~/shell$
 | `exit` | exits the current shell. 0 status value indicates successful execution, another value represents unsuccessful execution. |
 | `cat` | cat (from concatenate), is a wonderful utility that allows us to visualize the content of a text file in the standard output, without the need of an editor. |
 
-## Authors and Github
+# Authors and Github
 
 * **Please, read the [AUTHORS](https://github.com/MiguelBarreraDev/simple_shell/blob/main/AUTHORS) file**
 * **https://github.com/MiguelBarreraDev/simple_shell**
 
-## Contact Information
+# Contact Information
 
 
 ##### Please feel free to contact us regarding any matter (specially about mistakes, recomendations and gramar errors)
