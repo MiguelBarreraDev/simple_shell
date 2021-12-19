@@ -104,30 +104,20 @@ void shell_clear(__attribute__((unused))st_parameters *pmt)
 void shell_exit(st_parameters *pmt)
 {
 	char *str_status = NULL;
-	int status = 0;
-	int num = 0, i = 0, bs = 10;
+	int code_arg, band;
+
+	pmt->status = -1;
 
 	str_status = pmt->tokens[1];
-	status = (!str_status) ? 0 : atoi(str_status);
-	for (i = 0; str_status != NULL && str_status[i]; i++)
+	if (str_status)
 	{
-		if (i <= bs && str_status[i] >= '0' && str_status[i] <= '9')
+		band = validate_number(str_status);
+		if (band != -1)
 		{
-			num = (num * 10) + (str_status[i] - '0');
+			code_arg = atoi(str_status);
+			pmt->code = code_arg;
 		}
-		else
-		{
-			pmt->count_exit += 1;
-			write(STDERR_FILENO, "Exit: Illegal number\n", 21);
-			return;
-		}
+		if (band == -1 || code_arg < 0)
+			pmt->status = 2;
 	}
-	if (pmt->count_exit > 0 && status == 0)
-		status = 2;
-	free(pmt->command);
-	free(pmt->tokens[0]);
-	free(pmt->tokens);
-	if (pmt->band == 1)
-		_free(pmt->environment);
-	exit(status);
 }
