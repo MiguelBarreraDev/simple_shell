@@ -1,5 +1,5 @@
 #include  "shell.h"
-#define MAX 1024
+#include <errno.h>
 /**
  * validate_commands - validates the existence and execution
  * permissions of the command entered by the user
@@ -7,39 +7,25 @@
  */
 void validate_commands(st_parameters *pmt)
 {
-	char **tokens = pmt->tokens;
-	ssize_t validador;
-	char buffer1[MAX];
-	const char *str1 = "/bin/", *str2 = NULL;
+	ssize_t validate_cmd;
+	char *buffer;
 	int band = 0;
 	char *tmp_free = NULL;
 
 	tmp_free = pmt->tokens[0];
 
-	if (tokens[0] && tokens[0][0] != '/')
-	{
-		str2 = tokens[0];
-		band = 1;
-		memccpy((char *)memccpy(buffer1, str1, '\0', MAX) - 1, str2, '\0', MAX);
-		tokens[0] = buffer1;
-	}
+	validate_cmd = my_access(&band, &buffer, pmt);
 
-	validador = access(tokens[0], X_OK);
-	if (validador == -1)
-	{
-		/* @band: variable to recognize the format of the first token */
-		if (band == 1)
-			pmt->tokens[0] = tmp_free;
-		validador = access(tokens[0], X_OK);
-		if (validador == -1)
-			command_customs(pmt);
-	}
-	if (validador != -1)
-	{
+	if (validate_cmd == -1)
+		command_customs(pmt);
+	else
 		command_systems(pmt);
-		/* @band: variable to recognize the format of the first token */
-		if (band == 1)
-			pmt->tokens[0] = tmp_free;
+
+	/* @band: variable to recognize the format of the first token */
+	if (band == 1)
+	{
+		pmt->tokens[0] = tmp_free;
+		free(buffer);
 	}
 }
 /**
@@ -49,22 +35,24 @@ void validate_commands(st_parameters *pmt)
 void command_systems(st_parameters *pmt)
 {
 	pid_t id_proccess = 0;
+	int code = 0;
 
 	id_proccess = fork();
 	switch (id_proccess)
 	{
 		case -1:
-			write(STDERR_FILENO, "ERROR: Failed create child\n", 27);
 			break;
 		case 0:
 			execve(pmt->tokens[0], pmt->tokens, pmt->environment);
 			kill(getpid(), SIGKILL);
 			break;
 		default:
-			wait(NULL);
+			wait(&code);
+			if (code == 512)
+				code = 2;
+			pmt->code = code;
 			break;
 	}
-
 }
 /**
  * command_customs - run the entered command that belongs to custom commands
@@ -73,33 +61,13 @@ void command_systems(st_parameters *pmt)
 void command_customs(st_parameters *pmt)
 {
 	void (*f)(st_parameters *);
-	char *shell = pmt->name_shell;
-	char *input = pmt->tokens[0];
-	char *str_err = NULL;
-	char *lines;
-	char *s = ": ";
-	char *err = ": not found\n";
 
-	/* info - select function custom */
 	f = matcher(pmt->tokens[0]);
 	if (f == NULL)
-	{
-		if (pmt->input_type == 1)
-		{
-			perror(shell);
-		}
-		else
-		{
-			lines = to_str(pmt->lines);
-			_concat(&str_err, 6, shell, s, lines, s, input, err);
-			free(str_err);
-			free(lines);
-		}
-	}
+		pmt->status = 127;
 	else
 		f(pmt);
 }
-
 /**
  * matcher - Check the agreement between the command
  * entered and the list of program commands
@@ -116,10 +84,10 @@ void (*matcher(char *entry_cmd))(st_parameters *)
 		{"env", shell_env},
 		{"printenv", shell_env},
 		{"exit", shell_exit},
-		{"\"exit\"", shell_exit},
 		{"setenv", shell_setenv},
 		{"unsetenv", shell_unsetenv},
 		{"cd", shell_cd},
+		{"printenv", shell_printenv},
 		{NULL, NULL}
 	};
 	while (cmd[i].name != NULL)
