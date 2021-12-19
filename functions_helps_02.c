@@ -128,3 +128,24 @@ char *to_str(int n)
 	}
 	return (str);
 }
+/**
+ * validate_number - validate if the string represents an integer
+ * @str_number: the string represents an integer
+ *
+ * Return: length on success, 0 on failure
+ */
+int validate_number(char *str_number)
+{
+	int count = 0, i = 0;
+
+	if (*str_number == '-')
+		str_number++;
+	for (i = 0; str_number != NULL && str_number[i]; i++)
+	{
+		if (!(str_number[i] >= '0' && str_number[i] <= '9'))
+			count++;
+	}
+	if (count != 0)
+		return (-1);
+	return (i);
+}
