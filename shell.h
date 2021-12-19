@@ -10,14 +10,40 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdarg.h>
+#include <linux/limits.h>
+#include <limits.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 /*===== end =====*/
 
-/*=== macros ===*/
+/*==== macros ====*/
+#define PROMPT "|  #Cisfun$    "
 #define MAX_BUFFSIZE 1024
+/* Colors */
+#define RESET "\x1b[0m"
+#define NEGRprint_O_T "\x1b[30m"
+#define NEGRO_F "\x1b[40m"
+#define ROJO_T "\x1b[31m"
+#define ROJO_F "\x1b[41m"
+#define VERDE_T "\x1b[32m"
+#define VERDE_F "\x1b[42m"
+#define AMARILLO_T "\x1b[33m"
+#define AMARILLO_F "\x1b[43m"
+#define AZUL_T "\x1b[34m"
+#define AZUL_F "\x1b[44m"
+#define MAGENTA_T "\x1b[35m"
+#define MAGENTA_F "\x1b[45m"
+#define CYAN_T "\x1b[36m"
+#define CYAN_F "\x1b[46m"
+#define BLANCO_T "\x1b[37m"
+#define BLANCO_F "\x1b[47m"
+#define CLSCBLUE "\x1b[0;1;38;5;81;48;0;240m"
+#define CLSCBLUE_BG "\x1b[0;1;38;5;81;48;5;240m"
+#define CLCREMA "\x1b[0;1;38;5;221;48;0;240m"
+#define CLCREMA_BG "\x1b[0;1;38;5;221;48;5;240m"
+#define OUT "\x1b[0;1m"
 /*==== end ====*/
 
 /*== structs ==*/
@@ -30,7 +56,9 @@
  * @band: verify changes in the environment variables
  * @lines: counter lines
  * @input_type: 0 mood no interactive, 1 mood interactive
- * @count_exit: count exit entry
+ * @size_cmd: length of the command
+ * @status: program status
+ * @code: exit code
  *
  * Description: longer description
  */
@@ -40,10 +68,12 @@ typedef struct Parameters
 	char *name_shell;
 	char *command;
 	char **tokens;
-	int  band;
+	ssize_t size_cmd;
+	int band;
 	int lines;
 	int input_type;
-	int count_exit;
+	ssize_t status;
+	int code;
 } st_parameters;
 /**
  * struct cmd_clean - struct content name a function custom of my shell
@@ -95,7 +125,20 @@ char **_drealloc(char **src, size_t size, size_t add, char **list, int mood);
 unsigned int _dstrlen(char **ptr);
 void _concat(char **buff, int n, ...);
 char *to_str(int n);
+int validate_number(char *str_number);
+/* functions_IO */
 void init_struct(st_parameters *pmt, char **argv, char **env);
+void read_input(st_parameters *pmt);
+void parse_input(st_parameters *pmt);
+void print_prompt(st_parameters *pmt);
+
+/* functions_parts */
+void change_path(st_parameters *pmt, char pwd[PATH_MAX], char old[PATH_MAX]);
+void shell_cd_arg(st_parameters *pmt, char path_dest[], char path_old[]);
+
+/* functions_handler */
+void handler_status(st_parameters *pmt);
+void generator_message(st_parameters *pmt, char *message);
 /*===== end =====*/
 
 #endif
